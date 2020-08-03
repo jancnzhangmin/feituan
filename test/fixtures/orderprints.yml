@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  username: MyString
+  userphone: MyString
+  ordernumber: MyString
+  province: MyString
+  city: MyString
+  district: MyString
+  address: MyString
+  adcode: MyString
+  sendaddress: MyString
+  senduser: MyString
+  sendphone: MyString
+  receiveuser: MyString
+  receivephone: MyString
+  summary: MyText
+
+two:
+  username: MyString
+  userphone: MyString
+  ordernumber: MyString
+  province: MyString
+  city: MyString
+  district: MyString
+  address: MyString
+  adcode: MyString
+  sendaddress: MyString
+  senduser: MyString
+  sendphone: MyString
+  receiveuser: MyString
+  receivephone: MyString
+  summary: MyText

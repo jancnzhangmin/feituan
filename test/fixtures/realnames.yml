@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  realname: MyString
+  phone: MyString
+  province: MyString
+  city: MyString
+  district: MyString
+  address: MyString
+  adcode: MyString
+  status: 1
+  modifymsg: MyString
+  vcode: MyString
+  vcodetime: 2020-05-04 11:43:06
+
+two:
+  user_id: 
+  realname: MyString
+  phone: MyString
+  province: MyString
+  city: MyString
+  district: MyString
+  address: MyString
+  adcode: MyString
+  status: 1
+  modifymsg: MyString
+  vcode: MyString
+  vcodetime: 2020-05-04 11:43:06

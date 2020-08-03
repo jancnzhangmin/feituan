@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  limitdiscountproduct_id: 
+  number: 1.5
+  ordernumber: MyString
+
+two:
+  limitdiscountproduct_id: 
+  number: 1.5
+  ordernumber: MyString

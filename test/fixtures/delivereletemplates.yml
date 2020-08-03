@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  temid: MyString
+  isdefault: 1
+
+two:
+  temid: MyString
+  isdefault: 1

@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  openid: MyString
+  unionid: MyString
+  token: MyString
+  nickname: MyString
+  name: MyString
+  aliasname: MyString
+  headurl: MyString
+  realnamestatus: 1
+  isagent: 1
+
+two:
+  openid: MyString
+  unionid: MyString
+  token: MyString
+  nickname: MyString
+  name: MyString
+  aliasname: MyString
+  headurl: MyString
+  realnamestatus: 1
+  isagent: 1

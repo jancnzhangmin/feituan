@@ -1,0 +1,2 @@
+class Delivereletemplate < ApplicationRecord
+end

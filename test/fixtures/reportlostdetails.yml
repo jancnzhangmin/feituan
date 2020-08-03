@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  reportlost_id: 
+  product_id: 
+  buyparamoption_id: 
+  number: 1.5
+  summary: MyText
+
+two:
+  reportlost_id: 
+  product_id: 
+  buyparamoption_id: 
+  number: 1.5
+  summary: MyText

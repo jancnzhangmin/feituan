@@ -1,0 +1,2 @@
+class Elesheet < ApplicationRecord
+end

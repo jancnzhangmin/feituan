@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  price: 1.5
+  weight: 1.5
+  outweight: 1.5
+  weightprice: 1.5
+  freeweight: 1.5
+  status: 1
+
+two:
+  name: MyString
+  price: 1.5
+  weight: 1.5
+  outweight: 1.5
+  weightprice: 1.5
+  freeweight: 1.5
+  status: 1

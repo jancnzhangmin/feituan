@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  buyparam_id: 
+  name: MyString
+  weighting: 1.5
+  weight: 1.5
+
+two:
+  buyparam_id: 
+  name: MyString
+  weighting: 1.5
+  weight: 1.5

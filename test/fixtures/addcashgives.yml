@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  addcash_id: 
+  product_id: 
+  price: 1.5
+
+two:
+  addcash_id: 
+  product_id: 
+  price: 1.5

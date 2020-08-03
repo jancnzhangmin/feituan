@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ordernumber: MyString
+  summary: MyText
+  handle: MyString
+  reviewer: MyString
+  status: 1
+
+two:
+  ordernumber: MyString
+  summary: MyText
+  handle: MyString
+  reviewer: MyString
+  status: 1

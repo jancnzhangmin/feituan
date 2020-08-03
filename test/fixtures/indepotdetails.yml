@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  indepot_id: 
+  product_id: 
+  buyparamoption_id: 
+  number: 1.5
+  cost: 1.5
+
+two:
+  indepot_id: 
+  product_id: 
+  buyparamoption_id: 
+  number: 1.5
+  cost: 1.5

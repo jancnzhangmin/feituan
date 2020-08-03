@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  buyfullgiveproduct_id: 
+  number: 1.5
+  ordernumber: MyString
+
+two:
+  buyfullgiveproduct_id: 
+  number: 1.5
+  ordernumber: MyString

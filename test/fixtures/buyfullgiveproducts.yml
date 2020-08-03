@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  buyfull_id: 
+  product_id: 
+  givenumber: 1.5
+  innumber: 1.5
+  outnumber: 1.5
+
+two:
+  buyfull_id: 
+  product_id: 
+  givenumber: 1.5
+  innumber: 1.5
+  outnumber: 1.5

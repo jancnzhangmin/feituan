@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  wxappid: MyString
+  wxappsecret: MyString
+  autooutdepot: 1
+  receivetime: 1
+  evaluatetime: 1
+
+two:
+  wxappid: MyString
+  wxappsecret: MyString
+  autooutdepot: 1
+  receivetime: 1
+  evaluatetime: 1

@@ -1,0 +1,31 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  paytype_id: 
+  ordernumber: MyString
+  paystatus: 1
+  paytime: 2020-05-04 11:22:24
+  deliverstatus: 1
+  delivertime: 2020-05-04 11:22:24
+  receivestatus: 1
+  receivetime: 2020-05-04 11:22:24
+  evaluatestatus: 1
+  evaluatetime: 2020-05-04 11:22:24
+  status: 1
+  summary: MyText
+  amount: 1.5
+
+two:
+  paytype_id: 
+  ordernumber: MyString
+  paystatus: 1
+  paytime: 2020-05-04 11:22:24
+  deliverstatus: 1
+  delivertime: 2020-05-04 11:22:24
+  receivestatus: 1
+  receivetime: 2020-05-04 11:22:24
+  evaluatestatus: 1
+  evaluatetime: 2020-05-04 11:22:24
+  status: 1
+  summary: MyText
+  amount: 1.5
