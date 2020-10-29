@@ -56,9 +56,15 @@ class Admin::ProductsController < ApplicationController
                           cover:data["cover"],
                           price:data["price"],
                           trial:trial,
-                          content:data["content"]
+                          content:data["content"],
+                          seller_id: data["seller_id"]
                           )
     if product.save
+      product.delivermodes.destroy_all
+      data["deliverselect"].each do |f|
+        delivermode = Delivermode.find_by_name(f)
+        product.delivermodes << delivermode
+      end
       return_res('')
     else
       return_res('', 10001, product.errors)
@@ -83,8 +89,14 @@ class Admin::ProductsController < ApplicationController
                           cover:data["cover"],
                           price:data["price"],
                           trial:trial,
-                          content:data["content"]
+                          content:data["content"],
+                      seller_id: data["seller_id"]
     )
+      product.delivermodes.destroy_all
+      data["deliverselect"].each do |f|
+        delivermode = Delivermode.find_by_name(f)
+        product.delivermodes << delivermode
+      end
       return_res('')
     else
       return_res('', 10001, product.errors.full_messages(&:msg).join(' '))
@@ -93,11 +105,46 @@ class Admin::ProductsController < ApplicationController
 
   def show
     product = Product.find(params[:id])
+    sellers = Seller.all
+    sellerarr = []
+    sellers.each do |f|
+      seller_param = {
+          value: f.id,
+          label: f.name
+      }
+      sellerarr.push seller_param
+    end
+
     if product
-      return_res(product)
+      product_param = {
+          id:product.id,
+          name: product.name,
+          subname: product.subname,
+          barcode: product.barcode,
+          price: product.price,
+          onsale: product.onsale,
+          cover: product.cover.to_s,
+          content: product.content,
+          sellers: sellerarr,
+          seller_id: product.seller_id
+      }
+      return_res(product_param)
     else
       return_res('', 10001, '无效的记录值')
     end
+  end
+
+  def getseller
+    sellers = Seller.all
+    sellerarr = []
+    sellers.each do |f|
+      seller_param = {
+          value: f.id,
+          label: f.name
+      }
+      sellerarr.push seller_param
+    end
+    return_res(sellerarr)
   end
 
   def destroy
@@ -107,6 +154,22 @@ class Admin::ProductsController < ApplicationController
     else
       return_res('',10001,product.errors.full_messages(&:msg).join(' '))
     end
+  end
+
+  def get_delivermode
+    seller = Seller.find(params[:seller_id])
+    delivermodes = seller.delivermodes.map(&:name)
+    deliverids = []
+    if params[:product_id].to_i != 0
+      product = Product.find(params[:product_id])
+      deliverids = product.delivermodes.map(&:keyword)
+    end
+
+    param = {
+        delivermode: delivermodes,
+        deliverids: deliverids
+    }
+    return_res(param)
   end
 
 end

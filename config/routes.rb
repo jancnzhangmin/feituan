@@ -27,6 +27,10 @@ Rails.application.routes.draw do
         end
       end
       resources :agentprices
+      collection do
+        get 'get_delivermode'
+        get 'getseller'
+      end
     end
     resources :resources
     resources :indepots do
@@ -103,12 +107,33 @@ Rails.application.routes.draw do
     end
     resources :orderproducts
     resources :profits
-    resources :sellers
+    resources :sellers do
+      resources :shophours
+      collection do
+        get 'get_delivermode'
+        get 'ckeck_login_unipue'
+      end
+    end
+    resources :delivermodes
+    resources :todaydeals do
+      collection do
+        get 'get_product_list'
+      end
+      member do
+        get 'get_product'
+        post 'set_product'
+      end
+    end
   end
 
   namespace :api do
     resources :testapis
-    resources :homes
+    resources :homes do
+      collection do
+      get 'getrecommendseller'
+      get 'searchproduct'
+      end
+    end
     resources :getopenids
     resources :productlists
     resources :buycars do
@@ -128,6 +153,10 @@ Rails.application.routes.draw do
         post 'pay'
         post 'get_express'
         post 'confirmdeliver'
+        post 'wx_pay'
+        post 'wxpay_notify'
+        get 'exchangerate'
+        get 'getdelivertime'
       end
     end
     resources :users do
@@ -144,10 +173,16 @@ Rails.application.routes.draw do
         get 'taskdetail'
         get 'mysales'
         get 'profit'
+        get 'setlocation'
       end
     end
     resources :agents
     resources :evaluates
     resources :productshares
+    resources :userlocation do
+      collection do
+        get 'getnear'
+      end
+    end
   end
 end

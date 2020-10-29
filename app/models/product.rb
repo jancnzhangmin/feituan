@@ -21,6 +21,8 @@ class Product < ApplicationRecord
   has_many :limitdiscountproducts, dependent: :destroy
   has_many :buycars, dependent: :destroy
   has_many :productshares, dependent: :destroy
+  has_and_belongs_to_many :delivermodes
+  has_and_belongs_to_many :todaydeals
 
   after_save :create_pinyin
 

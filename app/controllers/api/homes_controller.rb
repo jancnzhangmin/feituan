@@ -32,10 +32,61 @@ class Api::HomesController < ApplicationController
       }
       productarr.push param
     end
+    todaydeals = Todaydeal.where('begintime < ? and endtime > ?', Time.now, Time.now)
+    productidsarr = []
+    todaydeals.each do |f|
+      productidsarr += f.products.ids
+    end
+    productidsarr.uniq!
+
+    todayarr = []
+    productidsarr.each do |f|
+      product = Product.find(f)
+      product_param = {
+          id: product.id,
+          name: product.name,
+          img: product.cover,
+          price: product.price
+      }
+      todayarr.push product_param
+    end
+
     param = {
         productcla: productclaarr,
-        productlist: productarr
+        productlist: productarr,
+        today: todayarr
     }
     return_api(param)
   end
+
+  def getrecommendseller
+    sellers = Seller.all
+    sellarr = []
+    sellers.each do |seller|
+      seller_param = {
+          id: seller.id,
+
+      }
+    end
+  end
+
+  def searchproduct
+    products = Product.where('onsale = ? and ( name like ? or pinyin like ? or fullpinyin like ?)',1,"%#{params[:keyword]}%","%#{params[:keyword]}%","%#{params[:keyword]}%")
+    productarr = []
+    products.each do |f|
+      param = {
+          id: f.id,
+          name: f.name,
+          subname: f.subname,
+          cover: f.cover.split('?')[0],
+          agentprice: f.price,
+          price: f.price,
+          activestatus: 0,
+          activename: ''
+      }
+      productarr.push param
+    end
+    return_api(productarr)
+  end
+
 end

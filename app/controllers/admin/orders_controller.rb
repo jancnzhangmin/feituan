@@ -102,18 +102,7 @@ class Admin::OrdersController < ApplicationController
       amount += f.number * f.price
       orderdetailarr.push param
     end
-    param = {
-        outdepot: -1,
-        id: freight.id,
-        product:'快递费',
-        buyparam: '',
-        buyoption: '',
-        number: order.orderdelivers.size,
-        price: '',
-        amount: ActiveSupport::NumberHelper.number_to_currency(freight.amount, unit:'')
-    }
-    amount += freight.amount
-    orderdetailarr.push param
+
     param = {
         outdepot: -1,
         id: freight.id,
@@ -239,6 +228,8 @@ class Admin::OrdersController < ApplicationController
   def set_elesheet
     #logger.info reponse
   end
+
+
 
   private
   def get_elesheet

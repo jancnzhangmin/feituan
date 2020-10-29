@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_03_164506) do
+ActiveRecord::Schema.define(version: 2020_10_29_074358) do
 
   create_table "addcashes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
@@ -262,6 +262,29 @@ ActiveRecord::Schema.define(version: 2020_08_03_164506) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "delivermodes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.float "weighting"
+    t.integer "isdefault"
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "keyword"
+  end
+
+  create_table "delivermodes_products", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "delivermode_id", null: false
+    t.bigint "product_id", null: false
+    t.index ["delivermode_id", "product_id"], name: "index_delivermodes_products_on_delivermode_id_and_product_id"
+    t.index ["product_id", "delivermode_id"], name: "index_delivermodes_products_on_product_id_and_delivermode_id"
+  end
+
+  create_table "delivermodes_sellers", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "delivermode_id", null: false
+    t.bigint "seller_id", null: false
+    t.index ["delivermode_id", "seller_id"], name: "index_delivermodes_sellers_on_delivermode_id_and_seller_id"
+    t.index ["seller_id", "delivermode_id"], name: "index_delivermodes_sellers_on_seller_id_and_delivermode_id"
+  end
+
   create_table "depots", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "product_id"
     t.bigint "buyparamoption_id"
@@ -270,6 +293,7 @@ ActiveRecord::Schema.define(version: 2020_08_03_164506) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.float "total"
+    t.float "warn"
     t.index ["buyparamoption_id"], name: "index_depots_on_buyparamoption_id"
     t.index ["product_id"], name: "index_depots_on_product_id"
   end
@@ -308,6 +332,12 @@ ActiveRecord::Schema.define(version: 2020_08_03_164506) do
     t.datetime "endtime"
     t.integer "examinestatus"
     t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "exchangerates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.float "rate"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -630,6 +660,11 @@ ActiveRecord::Schema.define(version: 2020_08_03_164506) do
     t.bigint "statement_id", null: false
   end
 
+  create_table "products_todaydeals", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.bigint "todaydeal_id", null: false
+  end
+
   create_table "productshares", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "product_id"
     t.string "productshare"
@@ -686,6 +721,8 @@ ActiveRecord::Schema.define(version: 2020_08_03_164506) do
     t.integer "isdefault"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.decimal "lng", precision: 15, scale: 12
+    t.decimal "lat", precision: 15, scale: 12
     t.index ["user_id"], name: "index_receiveadds_on_user_id"
   end
 
@@ -779,6 +816,15 @@ ActiveRecord::Schema.define(version: 2020_08_03_164506) do
     t.string "kuaidisecret"
   end
 
+  create_table "shophours", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "seller_id"
+    t.time "begintime"
+    t.time "endtime"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["seller_id"], name: "index_shophours_on_seller_id"
+  end
+
   create_table "showparams", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "product_id"
     t.string "name"
@@ -791,6 +837,13 @@ ActiveRecord::Schema.define(version: 2020_08_03_164506) do
 
   create_table "statements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.text "statement"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "todaydeals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.datetime "begintime"
+    t.datetime "endtime"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -867,6 +920,9 @@ ActiveRecord::Schema.define(version: 2020_08_03_164506) do
     t.float "balance"
     t.float "income"
     t.float "deposit"
+    t.decimal "lng", precision: 15, scale: 12
+    t.decimal "lat", precision: 15, scale: 12
+    t.string "city"
     t.index ["up_id", "token"], name: "index_users_on_up_id_and_token"
   end
 

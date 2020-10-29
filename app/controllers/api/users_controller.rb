@@ -28,7 +28,10 @@ class Api::UsersController < ApplicationController
         paycount: user.orders.where('paystatus = ? and deliverstatus = ?',0, 0).size,
         delivercount: user.orders.where('paystatus = ? and deliverstatus = ?', 1, 0).size,
         receivecount: user.orders.where('deliverstatus = ? and receivestatus = ?', 1, 0).size,
-        evaluatecount: user.orders.where('receivestatus = ? and evaluatestatus = ?',1, 0).size
+        evaluatecount: user.orders.where('receivestatus = ? and evaluatestatus = ?',1, 0).size,
+        lng: user.lng.to_f,
+        lat: user.lat.to_f,
+        city: user.city.to_s
     }
     return_api(JSON.parse(param.to_json))
   end
@@ -568,6 +571,15 @@ class Api::UsersController < ApplicationController
         final: final
     }
     return_api(param)
+  end
+
+  def setlocation
+    user = User.find_by_token(params[:token])
+    user.update(lng: params[:lng], lat: params[:lat], city:params[:city])
+    logger.info '=============================================='
+    logger.info params[:lng]
+    logger.info params[:lat]
+    return_api('')
   end
 
   private

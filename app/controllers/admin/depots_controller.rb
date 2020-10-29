@@ -22,7 +22,10 @@ class Admin::DepotsController < ApplicationController
           buyparamoption: buyparamoption_name,
           cost: ActiveSupport::NumberHelper.number_to_currency(f.cost,unit:''),
           number:f.number,
-          total: ActiveSupport::NumberHelper.number_to_currency(f.total,unit:'')
+          total: ActiveSupport::NumberHelper.number_to_currency(f.total,unit:''),
+          warn: f.warn.to_i,
+          edit: false,
+          originalwarn: f.warn.to_i
       }
       depotarr.push depot_param
     end
@@ -35,5 +38,11 @@ class Admin::DepotsController < ApplicationController
         total_cost:ActiveSupport::NumberHelper.number_to_currency(Depot.all.sum('total'), unit:'￥')
     }
     return_res(param)
+  end
+
+  def update
+    depot = Depot.find(params[:id])
+    depot.update(warn: params[:warn])
+    return_res('')
   end
 end

@@ -155,6 +155,61 @@ class Api::OrdersController < ApplicationController
     return_api('')
   end
 
+  def wx_pay
+    user = User.find_by_token(params[:token])
+    order = Order.find(params[:payorder_id])
+    body = order.orderdetails.map{|n|n.product.name}.join(' ')
+    total_fee = order.amount * (getexchangerate)
+    logger.info '======================================'
+    logger.info getexchangerate
+    payment_params = {
+        body: body,
+        out_trade_no: order.ordernumber,
+        total_fee: (total_fee * 100).to_i,
+        spbill_create_ip:  '127.0.0.1',
+        notify_url: 'https://feituan.ysdsoft.com/api/orders/wxpay_notify',
+        trade_type: 'JSAPI', # could be "JSAPI", "NATIVE" or "APP",
+        openid: user.openid  # required when trade_type is `JSAPI`
+    }
+    result = WxPay::Service.invoke_unifiedorder(payment_params)
+    $client ||= WeixinAuthorize::Client.new('wx9ba0afe3f3f1aa14', '92bdb66ae430c649d4ef4099fc5115f7')
+    sign_package = $client.get_jssign_package(request.url.split('#')[0])
+    if result.nil?
+      #render html: "no"
+    else
+      pay_ticket_param = {
+          timeStamp: sign_package["timestamp"],
+          nonceStr: sign_package["nonceStr"],
+          package: "prepay_id=#{result['prepay_id']}",  #这里一定注意，不仅仅是prepay_id，还需要拼接上“prepay_id=”
+          signType: "MD5",
+          appId: WxPay.appid,
+          key: WxPay.key
+      }
+      pay_ticket_param = {
+          paySign: WxPay::Sign.generate(pay_ticket_param)  #然后我们手动进行paySign计算
+      }.merge(pay_ticket_param)
+          param = {
+          pay_ticket_param: pay_ticket_param,
+          sign_package: sign_package
+      }
+      logger.info '====================================================='
+      logger.info param.to_json
+      logger.info result
+      logger.info params[:url]
+      logger.info '====================================================='
+    return_api(param)
+    end
+  end
+
+  def wxpay_notify
+    result = Hash.from_xml(request.body.read)["xml"]
+    if result['return_code']=='SUCCESS'
+      order = Order.find_by_ordernumber(result['out_trade_no'])
+      order.update(paystatus: 1, paytime: Time.now)
+    end
+    render :xml => {return_code: "SUCCESS"}.to_xml(root: 'xml', dasherize: false)
+  end
+
   def get_express
     order = Order.find(params[:order_id])
     orderdelivers = order.orderdelivers
@@ -166,6 +221,82 @@ class Api::OrdersController < ApplicationController
     order.update(receivestatus: 1, receivetime:Time.now)
     IncomeJob.perform_later(order.id)
     return_api('')
+  end
+
+  def getexchangerate
+    exchangerate = Exchangerate.last
+    if exchangerate && exchangerate.created_at + 1.days > Time.now
+      rate = exchangerate.rate
+    else
+      conn = Faraday.new(:url => 'https://jisuhuilv.market.alicloudapi.com') do |faraday|
+        faraday.request :url_encoded # form-encode POST params
+        faraday.response :logger # log requests to STDOUT
+        faraday.adapter Faraday.default_adapter # make requests with Net::HTTP
+      end
+      conn.headers[:Authorization] = 'APPCODE decb721f31db4b269706552df2724ecf'
+      conn.params[:amount] = 1
+      conn.params[:from] = 'PHP'
+      conn.params[:to] = "CNY"
+      request = conn.post do |req|
+        req.url '/exchange/convert'
+      end
+      rate = JSON.parse(request.body)["result"]["rate"]
+      Exchangerate.create(rate: rate)
+    end
+    rate
+  end
+
+  def getdelivertime
+    isselect = 1
+    deliverarr = []
+    3.times do |i|
+      if i == 0
+        minarr = []
+        minute_step = 0
+        stime = ((Time.now + 40.minute).strftime('%Y-%m-%d %H:%M')[0..-2] + '0:00').to_time
+        currenttime = stime
+        while currenttime < Time.now.end_of_day do
+          min_param = {
+              value: currenttime.strftime('%H:%M'),
+              isselect: isselect
+          }
+          minarr.push min_param
+          minute_step += 1
+          currenttime = stime + minute_step * 20.minutes
+          isselect = 0
+        end
+        day_param = {
+            title: (Time.now + i.days).strftime('%m月%d日'),
+            data: minarr
+        }
+        deliverarr.push day_param
+      else
+        minarr = []
+        minute_step = 0
+        stime = (Time.now + i.days).beginning_of_day + 8.hour
+        currenttime = stime
+        while currenttime < (Time.now + i.days).end_of_day do
+          min_param = {
+              value: currenttime.strftime('%H:%M'),
+              isselect: isselect
+          }
+          minarr.push min_param
+          minute_step += 1
+          currenttime = stime + minute_step * 20.minutes
+          puts '====================='
+          puts stime
+          puts minute_step
+        end
+        day_param = {
+            title: (Time.now + i.days).strftime('%m月%d日'),
+            data: minarr
+        }
+        deliverarr.push day_param
+      end
+    end
+    return_api(deliverarr)
+    #(Time.now + 30.minute).strftime('%Y-%m-%d %H:%M')[0..-2] + '0:00'
+
   end
 
 end

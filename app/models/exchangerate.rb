@@ -1,0 +1,2 @@
+class Exchangerate < ApplicationRecord
+end

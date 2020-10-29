@@ -24,14 +24,14 @@ module Feituan
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
     config.active_record.default_timezone = :local
-    config.serverurl = 'https://feituan.ysdsoft.com'
-    config.serverurl = 'http://192.168.43.252:3000'
     config.time_zone = 'Beijing'
+    config.serverurl = 'https://feituan.ysdsoft.com'
+    #config.serverurl = 'http://192.168.0.128:3000'
     config.middleware.insert_before 0, Rack::Cors do
-      allow do
-        origins '*'
-          resource '*', :headers => :any, :methods => [:get, :post, :put, :delete, :options]
-        end
+      # allow do
+      #   origins '*'
+      #     resource '*', :headers => :any, :methods => [:get, :post, :put, :delete, :options]
+      #   end
     end
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers

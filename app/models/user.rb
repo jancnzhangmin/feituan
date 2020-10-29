@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  acts_as_mappable
   has_many :receiveadds, dependent: :destroy
   has_many :withdrawals, dependent: :destroy
   has_one :realname, dependent: :destroy
