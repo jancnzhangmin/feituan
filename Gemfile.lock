@@ -120,7 +120,9 @@ GEM
     mime-types (3.3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2020.0512)
-    mimemagic (0.3.4)
+    mimemagic (0.3.10)
+      nokogiri (~> 1)
+      rake
     mini_magick (4.10.1)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
@@ -228,7 +230,7 @@ GEM
     wx_pay (0.21.0)
       activesupport (>= 3.2)
       rest-client (>= 2.0.0)
-    yajl-ruby (1.4.1)
+    yajl-ruby (1.4.2)
     zeitwerk (2.3.0)
 
 PLATFORMS
